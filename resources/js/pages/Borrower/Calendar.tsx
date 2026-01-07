@@ -165,6 +165,39 @@ export default function Calendar({ events }: Props) {
                                 </TabsList>
 
                                 <TabsContent value="calendar" className="mt-4">
+                                    <style>{`
+                                        @media (max-width: 640px) {
+                                            .fc .fc-button {
+                                                padding: 0.25rem 0.5rem;
+                                                font-size: 0.75rem;
+                                            }
+                                            .fc .fc-toolbar-title {
+                                                font-size: 1rem;
+                                            }
+                                            .fc .fc-col-header-cell {
+                                                font-size: 0.75rem;
+                                            }
+                                            .fc .fc-daygrid-day-number {
+                                                font-size: 0.75rem;
+                                            }
+                                            .fc .fc-event {
+                                                font-size: 0.65rem;
+                                                padding: 1px 2px;
+                                                margin-bottom: 1px;
+                                            }
+                                            .fc .fc-event-title {
+                                                overflow: hidden;
+                                                text-overflow: ellipsis;
+                                                white-space: nowrap;
+                                            }
+                                            .fc .fc-event-time {
+                                                display: none;
+                                            }
+                                            .fc .fc-daygrid-event {
+                                                white-space: nowrap;
+                                            }
+                                        }
+                                    `}</style>
                                     <FullCalendar
                                         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                                         initialView="dayGridMonth"

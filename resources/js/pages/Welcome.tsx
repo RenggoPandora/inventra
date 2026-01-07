@@ -61,30 +61,37 @@ export default function Welcome({ auth }: Props) {
             <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b z-50 shadow-sm">
                 <div className="container mx-auto px-4">
                     <div className="flex justify-between items-center h-16">
-                        <div className="flex items-center gap-3">
-                            <img src="/assets/icon.svg" alt="INVENTRA" className="h-10 w-10" />
-                            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                        <Link href="/" className="flex items-center gap-2 sm:gap-3">
+                            <img src="/assets/icon.svg" alt="INVENTRA" className="h-8 w-8 sm:h-10 sm:w-10" />
+                            <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                                 INVENTRA
                             </span>
-                        </div>
-                        <div className="flex items-center gap-4">
+                        </Link>
+                        <div className="flex items-center gap-2 sm:gap-4">
                             {auth?.user ? (
                                 <Link href="/admin/dashboard">
-                                    <Button size="lg">
-                                        Dashboard Admin
-                                        <ArrowRight className="ml-2 h-4 w-4" />
+                                    <Button size="sm" className="sm:text-base">
+                                        <span className="hidden sm:inline">Dashboard Admin</span>
+                                        <span className="sm:hidden">Admin</span>
+                                        <ArrowRight className="ml-1 sm:ml-2 h-3 w-3 sm:h-4 sm:w-4" />
                                     </Button>
                                 </Link>
                             ) : (
                                 <>
-                                    <Link href="/borrower/catalog">
+                                    <Link href="/borrower/catalog" className="hidden sm:block">
                                         <Button variant="ghost" size="lg">
                                             Lihat Katalog
                                         </Button>
                                     </Link>
+                                    <Link href="/borrower/catalog" className="sm:hidden">
+                                        <Button variant="ghost" size="sm">
+                                            Katalog
+                                        </Button>
+                                    </Link>
                                     <Link href="/login">
-                                        <Button size="lg">
-                                            Login Admin
+                                        <Button size="sm" className="sm:text-base sm:px-4 sm:py-2">
+                                            <span className="hidden sm:inline">Login Admin</span>
+                                            <span className="sm:hidden">Login</span>
                                         </Button>
                                     </Link>
                                 </>

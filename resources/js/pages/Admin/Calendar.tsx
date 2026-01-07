@@ -108,14 +108,14 @@ export default function AdminCalendar({ events }: Props) {
         <AuthenticatedLayout>
             <Head title="Kalender Peminjaman" />
 
-            <div className="py-8">
+            <div className="py-4 sm:py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="mb-6">
-                        <h1 className="text-3xl font-bold text-gray-900">Kalender Peminjaman</h1>
-                        <p className="text-gray-600 mt-1">Jadwal peminjaman barang yang telah disetujui</p>
+                    <div className="mb-4 sm:mb-6">
+                        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Kalender Peminjaman</h1>
+                        <p className="text-sm sm:text-base text-gray-600 mt-1">Jadwal peminjaman barang yang telah disetujui</p>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-4 sm:mb-6">
                         <Card>
                             <CardHeader className="pb-3">
                                 <CardTitle className="text-sm font-medium">Total Peminjaman</CardTitle>
@@ -162,22 +162,55 @@ export default function AdminCalendar({ events }: Props) {
 
                     <Card>
                         <CardHeader>
-                            <CardTitle>Jadwal Peminjaman</CardTitle>
+                            <CardTitle className="text-lg sm:text-xl">Jadwal Peminjaman</CardTitle>
                         </CardHeader>
-                        <CardContent>
+                        <CardContent className="p-3 sm:p-6">
                             <Tabs defaultValue="calendar" className="w-full">
                                 <TabsList className="grid w-full max-w-md grid-cols-2">
-                                    <TabsTrigger value="calendar" className="gap-2">
-                                        <CalendarIcon className="h-4 w-4" />
-                                        Tampilan Kalender
+                                    <TabsTrigger value="calendar" className="gap-1 sm:gap-2 text-xs sm:text-sm">
+                                        <CalendarIcon className="h-3 w-3 sm:h-4 sm:w-4" />
+                                        <span className="hidden sm:inline">Tampilan </span>Kalender
                                     </TabsTrigger>
-                                    <TabsTrigger value="list" className="gap-2">
-                                        <List className="h-4 w-4" />
-                                        Tampilan List
+                                    <TabsTrigger value="list" className="gap-1 sm:gap-2 text-xs sm:text-sm">
+                                        <List className="h-3 w-3 sm:h-4 sm:w-4" />
+                                        <span className="hidden sm:inline">Tampilan </span>List
                                     </TabsTrigger>
                                 </TabsList>
 
                                 <TabsContent value="calendar" className="mt-4">
+                                    <style>{`
+                                        @media (max-width: 640px) {
+                                            .fc .fc-button {
+                                                padding: 0.25rem 0.5rem;
+                                                font-size: 0.75rem;
+                                            }
+                                            .fc .fc-toolbar-title {
+                                                font-size: 1rem;
+                                            }
+                                            .fc .fc-col-header-cell {
+                                                font-size: 0.75rem;
+                                            }
+                                            .fc .fc-daygrid-day-number {
+                                                font-size: 0.75rem;
+                                            }
+                                            .fc .fc-event {
+                                                font-size: 0.65rem;
+                                                padding: 1px 2px;
+                                                margin-bottom: 1px;
+                                            }
+                                            .fc .fc-event-title {
+                                                overflow: hidden;
+                                                text-overflow: ellipsis;
+                                                white-space: nowrap;
+                                            }
+                                            .fc .fc-event-time {
+                                                display: none;
+                                            }
+                                            .fc .fc-daygrid-event {
+                                                white-space: nowrap;
+                                            }
+                                        }
+                                    `}</style>
                                     <FullCalendar
                                         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                                         initialView="dayGridMonth"
@@ -210,7 +243,7 @@ export default function AdminCalendar({ events }: Props) {
                                 </TabsContent>
 
                                 <TabsContent value="list" className="mt-4">
-                                    <div className="rounded-md border">
+                                    <div className="rounded-md border overflow-x-auto">
                                         <Table>
                                             <TableHeader>
                                                 <TableRow>
@@ -278,17 +311,19 @@ export default function AdminCalendar({ events }: Props) {
                                                                 </Badge>
                                                             </TableCell>
                                                             <TableCell>
-                                                                <div className="flex gap-2">
+                                                                <div className="flex gap-1 sm:gap-2">
                                                                     <Button 
                                                                         size="sm" 
                                                                         variant="outline"
                                                                         onClick={() => setSelectedEvent(event)}
+                                                                        className="px-2"
                                                                     >
                                                                         <Eye className="h-4 w-4" />
                                                                     </Button>
                                                                     <Link href={`/admin/requests/${event.id}`}>
-                                                                        <Button size="sm" variant="default">
-                                                                            Detail
+                                                                        <Button size="sm" variant="default" className="px-2 sm:px-4">
+                                                                            <span className="hidden sm:inline">Detail</span>
+                                                                            <span className="sm:hidden">→</span>
                                                                         </Button>
                                                                     </Link>
                                                                 </div>
@@ -309,14 +344,14 @@ export default function AdminCalendar({ events }: Props) {
             {/* Event Detail Dialog */}
             <Dialog open={!!selectedEvent} onOpenChange={() => setSelectedEvent(null)}>
                 {selectedEvent && (
-                    <DialogContent className="max-w-2xl">
+                    <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                         <DialogHeader>
-                            <DialogTitle>Detail Peminjaman</DialogTitle>
-                            <DialogDescription>
+                            <DialogTitle className="text-lg sm:text-xl">Detail Peminjaman</DialogTitle>
+                            <DialogDescription className="text-sm">
                                 Informasi lengkap peminjaman barang
                             </DialogDescription>
                         </DialogHeader>
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                             <div className="space-y-4">
                                 <div>
                                     <label className="text-sm font-semibold text-gray-600">Barang</label>
@@ -351,25 +386,26 @@ export default function AdminCalendar({ events }: Props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-6 mt-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-4">
                             <div>
                                 <label className="text-sm font-semibold text-gray-600">Waktu Mulai</label>
-                                <p>{selectedEvent.extendedProps.tanggal_mulai}</p>
+                                <p className="text-sm sm:text-base">{selectedEvent.extendedProps.tanggal_mulai}</p>
                             </div>
                             <div>
                                 <label className="text-sm font-semibold text-gray-600">Waktu Selesai</label>
-                                <p>{selectedEvent.extendedProps.tanggal_selesai}</p>
+                                <p className="text-sm sm:text-base">{selectedEvent.extendedProps.tanggal_selesai}</p>
                             </div>
                         </div>
                         <div className="mt-4">
                             <label className="text-sm font-semibold text-gray-600">Keperluan</label>
-                            <p className="text-gray-700 mt-1 whitespace-pre-wrap">{selectedEvent.extendedProps.keperluan}</p>
+                            <p className="text-sm sm:text-base text-gray-700 mt-1 whitespace-pre-wrap">{selectedEvent.extendedProps.keperluan}</p>
                         </div>
-                        <div className="mt-6 flex gap-2">
+                        <div className="mt-4 sm:mt-6 flex gap-2">
                             <Link href={`/admin/requests/${selectedEvent.id}`}>
-                                <Button className="gap-2">
+                                <Button className="gap-2 w-full sm:w-auto text-sm">
                                     <Eye className="h-4 w-4" />
-                                    Lihat Detail Lengkap
+                                    <span className="hidden sm:inline">Lihat Detail Lengkap</span>
+                                    <span className="sm:hidden">Detail Lengkap</span>
                                 </Button>
                             </Link>
                         </div>
