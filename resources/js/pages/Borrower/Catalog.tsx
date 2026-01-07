@@ -32,20 +32,20 @@ export default function Catalog({ items }: Props) {
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {items.map((item) => (
-                            <Card key={item.id} className="hover:shadow-lg transition-shadow">
-                                <CardHeader>
+                            <Card key={item.id} className="hover:shadow-lg transition-shadow flex flex-col h-full">
+                                <CardHeader className="flex-none">
                                     <div className="flex justify-between items-start mb-2">
                                         <CardTitle className="text-lg">{item.nama_barang}</CardTitle>
                                         <Badge variant={item.jumlah_tersedia > 0 ? 'default' : 'secondary'}>
                                             {item.kategori}
                                         </Badge>
                                     </div>
-                                    <CardDescription className="line-clamp-2">
+                                    <CardDescription className="line-clamp-3 min-h-[60px]">
                                         {item.deskripsi}
                                     </CardDescription>
                                 </CardHeader>
-                                <CardContent>
-                                    <div className="space-y-2">
+                                <CardContent className="flex-grow flex flex-col justify-end">
+                                    <div className="space-y-2 mb-4">
                                         <div className="flex justify-between text-sm">
                                             <span className="text-gray-600">Total:</span>
                                             <span className="font-semibold">{item.jumlah_total}</span>
@@ -59,7 +59,7 @@ export default function Catalog({ items }: Props) {
                                     </div>
                                     <Link href={`/borrower/request-form?item_id=${item.id}`}>
                                         <Button 
-                                            className="w-full mt-4" 
+                                            className="w-full" 
                                             disabled={item.jumlah_tersedia === 0}
                                         >
                                             {item.jumlah_tersedia > 0 ? 'Pinjam Barang' : 'Tidak Tersedia'}
