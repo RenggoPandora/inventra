@@ -97,7 +97,7 @@ export default function AdminCalendar({ events }: Props) {
         const variants = {
             approved: { variant: 'default' as const, label: 'Disetujui', color: 'bg-green-100 text-green-800' },
             on_progress: { variant: 'default' as const, label: 'Sedang Berlangsung', color: 'bg-blue-100 text-blue-800' },
-            completed: { variant: 'secondary' as const, label: 'Selesai', color: 'bg-gray-100 text-gray-800' },
+            returned: { variant: 'secondary' as const, label: 'Dikembalikan', color: 'bg-gray-100 text-gray-800' },
         };
 
         const config = variants[status as keyof typeof variants] || variants.approved;
@@ -149,11 +149,11 @@ export default function AdminCalendar({ events }: Props) {
                         </Card>
                         <Card>
                             <CardHeader className="pb-3">
-                                <CardTitle className="text-sm font-medium">Selesai</CardTitle>
+                                <CardTitle className="text-sm font-medium">Dikembalikan</CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <div className="text-2xl font-bold text-gray-600">
-                                    {events.filter(e => e.extendedProps.status === 'completed').length}
+                                    {events.filter(e => e.extendedProps.status === 'returned').length}
                                 </div>
                                 <p className="text-xs text-gray-500 mt-1">Sudah dikembalikan</p>
                             </CardContent>
