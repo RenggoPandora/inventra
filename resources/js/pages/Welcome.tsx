@@ -2,7 +2,16 @@ import { Head, Link } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
-export default function Welcome() {
+interface Props {
+    auth?: {
+        user?: {
+            name: string;
+            email: string;
+        };
+    };
+}
+
+export default function Welcome({ auth }: Props) {
     return (
         <>
             <Head title="Welcome" />
@@ -71,11 +80,19 @@ export default function Welcome() {
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <Link href="/login">
-                                    <Button variant="outline" className="w-full" size="lg">
-                                        Login Admin
-                                    </Button>
-                                </Link>
+                                {auth?.user ? (
+                                    <Link href="/admin/dashboard">
+                                        <Button className="w-full" size="lg">
+                                            Dashboard Admin
+                                        </Button>
+                                    </Link>
+                                ) : (
+                                    <Link href="/login">
+                                        <Button variant="outline" className="w-full" size="lg">
+                                            Login Admin
+                                        </Button>
+                                    </Link>
+                                )}
                             </CardContent>
                         </Card>
                     </div>

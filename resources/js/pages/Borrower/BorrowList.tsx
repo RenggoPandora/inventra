@@ -67,7 +67,7 @@ export default function BorrowList({ borrowRequests }: Props) {
                                         <TableHead>Instansi</TableHead>
                                         <TableHead>Barang</TableHead>
                                         <TableHead>Jumlah</TableHead>
-                                        <TableHead>Tanggal</TableHead>
+                                        <TableHead>Waktu Peminjaman</TableHead>
                                         <TableHead>Status</TableHead>
                                     </TableRow>
                                 </TableHeader>
@@ -79,7 +79,10 @@ export default function BorrowList({ borrowRequests }: Props) {
                                             <TableCell>{request.item.nama_barang}</TableCell>
                                             <TableCell>{request.jumlah}</TableCell>
                                             <TableCell>
-                                                {format(new Date(request.tanggal_mulai), 'dd MMM yyyy', { locale: id })} - {format(new Date(request.tanggal_selesai), 'dd MMM yyyy', { locale: id })}
+                                                <div className="text-sm">
+                                                    <div>{format(new Date(request.tanggal_mulai), 'dd MMM yyyy HH:mm', { locale: id })}</div>
+                                                    <div className="text-gray-500">s/d {format(new Date(request.tanggal_selesai), 'dd MMM yyyy HH:mm', { locale: id })}</div>
+                                                </div>
                                             </TableCell>
                                             <TableCell>{getStatusBadge(request.status)}</TableCell>
                                         </TableRow>

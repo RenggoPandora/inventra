@@ -10,6 +10,10 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Welcome');
+        return Inertia::render('Welcome', [
+            'auth' => [
+                'user' => auth()->user()
+            ]
+        ]);
     }
 }

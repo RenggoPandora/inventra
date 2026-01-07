@@ -57,7 +57,7 @@ export default function Catalog({ items }: Props) {
                                             </span>
                                         </div>
                                     </div>
-                                    <Link href="/borrower/request-form">
+                                    <Link href={`/borrower/request-form?item_id=${item.id}`}>
                                         <Button 
                                             className="w-full mt-4" 
                                             disabled={item.jumlah_tersedia === 0}

@@ -12,7 +12,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useEffect } from 'react';
 
 interface Item {
     id: number;
@@ -24,11 +24,12 @@ interface Item {
 
 interface Props {
     items: Item[];
+    selectedItemId?: string;
 }
 
-export default function RequestForm({ items }: Props) {
+export default function RequestForm({ items, selectedItemId }: Props) {
     const { data, setData, post, processing, errors } = useForm({
-        item_id: '',
+        item_id: selectedItemId || '',
         nama_peminjam: '',
         instansi: '',
         email: '',
@@ -38,6 +39,13 @@ export default function RequestForm({ items }: Props) {
         jumlah: '',
         keperluan: '',
     });
+
+    // Set item_id from URL parameter if provided
+    useEffect(() => {
+        if (selectedItemId && !data.item_id) {
+            setData('item_id', selectedItemId);
+        }
+    }, [selectedItemId]);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -144,10 +152,10 @@ export default function RequestForm({ items }: Props) {
 
                                     <div className="grid md:grid-cols-2 gap-4">
                                         <div>
-                                            <Label htmlFor="tanggal_mulai">Tanggal Mulai <span className="text-red-500">*</span></Label>
+                                            <Label htmlFor="tanggal_mulai">Tanggal & Waktu Mulai <span className="text-red-500">*</span></Label>
                                             <Input
                                                 id="tanggal_mulai"
-                                                type="date"
+                                                type="datetime-local"
                                                 value={data.tanggal_mulai}
                                                 onChange={(e) => setData('tanggal_mulai', e.target.value)}
                                                 required
@@ -156,10 +164,10 @@ export default function RequestForm({ items }: Props) {
                                         </div>
 
                                         <div>
-                                            <Label htmlFor="tanggal_selesai">Tanggal Selesai <span className="text-red-500">*</span></Label>
+                                            <Label htmlFor="tanggal_selesai">Tanggal & Waktu Selesai <span className="text-red-500">*</span></Label>
                                             <Input
                                                 id="tanggal_selesai"
-                                                type="date"
+                                                type="datetime-local"
                                                 value={data.tanggal_selesai}
                                                 onChange={(e) => setData('tanggal_selesai', e.target.value)}
                                                 required

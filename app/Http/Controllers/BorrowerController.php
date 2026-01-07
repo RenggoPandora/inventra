@@ -11,7 +11,7 @@ class BorrowerController extends Controller
 {
     public function catalog()
     {
-        $items = Item::where('status', 'aktif')
+        $items = Item::where('status', 'available')
             ->where('jumlah_tersedia', '>', 0)
             ->get();
 
@@ -60,14 +60,15 @@ class BorrowerController extends Controller
         ]);
     }
 
-    public function requestForm()
+    public function requestForm(Request $request)
     {
-        $items = Item::where('status', 'aktif')
+        $items = Item::where('status', 'available')
             ->where('jumlah_tersedia', '>', 0)
             ->get();
 
         return Inertia::render('Borrower/RequestForm', [
-            'items' => $items
+            'items' => $items,
+            'selectedItemId' => $request->query('item_id'),
         ]);
     }
 
@@ -79,10 +80,13 @@ class BorrowerController extends Controller
             'instansi' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'no_hp' => 'required|string|max:20',
-            'tanggal_mulai' => 'required|date|after_or_equal:today',
+            'tanggal_mulai' => 'required|date|after_or_equal:now',
             'tanggal_selesai' => 'required|date|after:tanggal_mulai',
             'jumlah' => 'required|integer|min:1',
             'keperluan' => 'required|string',
+        ], [
+            'tanggal_mulai.after_or_equal' => 'Tanggal & waktu mulai harus dari sekarang atau setelahnya.',
+            'tanggal_selesai.after' => 'Tanggal & waktu selesai harus setelah tanggal mulai.',
         ]);
 
         // Check if item has enough availability

@@ -16,7 +16,8 @@ class UserManagementController extends Controller
         $users = User::orderBy('created_at', 'desc')->get();
 
         return Inertia::render('Admin/Users/Index', [
-            'users' => $users
+            'users' => $users,
+            'currentUserId' => Auth::id(),
         ]);
     }
 
@@ -74,6 +75,12 @@ class UserManagementController extends Controller
         // Prevent deleting own account
         if ($user->id === Auth::id()) {
             return back()->withErrors(['error' => 'Tidak dapat menghapus akun sendiri.']);
+        }
+
+        // Prevent deleting last admin
+        $adminCount = User::count();
+        if ($adminCount <= 1) {
+            return back()->withErrors(['error' => 'Tidak dapat menghapus admin terakhir. Harus ada minimal 1 admin aktif.']);
         }
 
         $user->delete();
