@@ -144,7 +144,7 @@ return [
     */
 
     'features' => [
-        Features::registration(),
+        // Features::registration(), // Disabled: User registration only through admin panel
         Features::resetPasswords(),
         Features::emailVerification(),
         Features::twoFactorAuthentication([
